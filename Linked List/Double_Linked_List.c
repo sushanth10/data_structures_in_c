@@ -1,6 +1,5 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<ctype.h>
 
 typedef struct Node{
     int data;
@@ -74,7 +73,7 @@ void display(Node * head){
 
 Node * search(int data){
     Node * ptr = head;
-    while(ptrt!=NULL){
+    while(ptr!=NULL){
         if(ptr->data==data){
             return ptr;
         }
@@ -83,10 +82,32 @@ Node * search(int data){
     return NULL;
 }
 
+
+void delete(int data){
+    Node * ptr = search(data);
+    if(ptr==head){
+        head = ptr->next;
+        printf("The element remove from the list is %d\n",ptr->data);
+        free(ptr);
+    }
+    else if(ptr==tail){
+        tail = ptr->prev;
+        tail->next = NULL;        
+        printf("The element remove from the list is %d\n",ptr->data);
+        free(ptr);
+    }
+    else{
+        ptr->prev->next = ptr->next;
+        ptr->next->prev = ptr->prev;
+        printf("The element remove from the list is %d\n",ptr->data);
+        free(ptr);
+    }
+}
+
 int main(){
     int ch;
     printf("----------STARTING PROGRAM----------\n\n");
-    printf("Press 1 to Insert in Beginning, 2 to Insert at end, 3 to Insert Middle, 4 to display Linked List, 5 to Exit program : ");
+    printf("Press 1 to Insert in Beginning, 2 to Insert at end, 3 to Insert Middle, 4 to display Linked List, 5 to delete, 0 to exit : ");
     scanf("%d", &ch);
     while(ch>0){
         if(ch==1){
@@ -104,12 +125,6 @@ int main(){
                 printf("After which node do you want to insert?");
                 scanf("%d", &n);
                 Node * ptr = search(n);
-                while(ptr==NULL){
-                    printf("NODE WAS NOT FOUND. ENTER VALID NODE DATA.\n");
-                    printf("After which node do you want to insert?");
-                    scanf("%d", &n);
-                    ptr = search(n);
-                }
                 head = insertMid(ptr, ptr->next);
             }
             else{
@@ -117,12 +132,6 @@ int main(){
                 printf("Before which node do you want to insert?");
                 scanf("%d", &n);
                 Node * ptr = search(n);
-                while(ptr==NULL){
-                    printf("NODE WAS NOT FOUND. ENTER VALID NODE DATA.\n");
-                    printf("Before which node do you want to insert?");
-                    scanf("%d", &n);
-                    ptr = search(n);
-                }
                 head = insertMid(ptr->prev, ptr);
             }
         }
@@ -130,6 +139,12 @@ int main(){
             display(head);
         }
         else if(ch==5){
+            int data;
+            printf("Enter element you want to delete : ");
+            scanf("%d", &data);
+            delete(data);
+        }
+        else if(ch==0){
             break;
         }
         else{

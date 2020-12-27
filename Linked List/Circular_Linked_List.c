@@ -41,13 +41,27 @@ Node * search(int data){
         }
         ptr = ptr->next;
         c--;
-        continue;
     }
-    int dat;
-    printf("\nNODE NOT FOUND. ENTER DATA AGAIN : ");
-    scanf("%d", &dat);
-    search(dat);
-    
+    printf("\nNODE NOT FOUND");
+    return NULL;    
+}
+
+void delete(int data){
+    Node * ptr = search(data);
+    if(ptr==head){
+        head->prev->next = ptr->next;
+        head->next->prev = head->prev;
+        head = ptr->next;
+        printf("The element remove from the list is %d",ptr->data);
+        free(ptr);
+    }
+    else{
+        ptr->prev->next = ptr->next;
+        ptr->next->prev = ptr->prev;
+        printf("The element remove from the list is %d",ptr->data);
+        free(ptr);
+    }
+    count--;
 }
 
 Node * insertBeg(){
@@ -107,8 +121,11 @@ Node * insertMid(){
         scanf("%d",&m);
         Node * ptr = search(m);
         Node * new = creatnewNode(ptr->prev, ptr); 
-        new->prev->next = new;
-        new->next->prev = new;
+        ptr->prev->next = new;
+        ptr->prev = new;
+        if(ptr==head){
+            head = new;
+        }
         return head;
     }
 }
@@ -129,7 +146,7 @@ void display(Node * head){
 int main(){
     int ch;
     printf("----------STARTING PROGRAM----------\n\n");
-    printf("Press 1 to Insert in Beginning, 2 to Insert at end, 3 to Insert Middle, 4 to display Linked List, 5 to Exit program : ");
+    printf("Press 1 to Insert in Beginning, 2 to Insert at end, 3 to Insert Middle, 4 to display Linked List, 5 to delete node, 0 to exit : ");
     scanf("%d", &ch);
     while(ch>0){
         if(ch==1){
@@ -145,12 +162,15 @@ int main(){
             display(head);
         }
         else if(ch==5){
-            break;
+            printf("Enter data of the node to be removed : ");
+            int data;
+            scanf("%d",&data);
+            delete(data);
         }
         else{
             printf("INVALID CHOICE\n");
         }
-        printf("Press 1 to Insert in Beginning, 2 to Insert at end, 3 to Insert Middle, 4 to display Linked List, 5 to Exit program : ");
+        printf("Enter choice : ");
         scanf("%d", &ch);
     }
     printf("\n----------END OF PROGRAM----------");
