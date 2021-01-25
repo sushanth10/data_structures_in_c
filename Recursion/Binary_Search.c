@@ -2,7 +2,7 @@
 
 int bsearch(int arr[], int beg, int last, int a){
     if(last>=beg){
-        int mid = (beg + (last-1)) /2;
+        int mid = (beg + last-1) /2;
         if(arr[mid]==a)
             return mid;
         else if(arr[mid]<a)
@@ -20,7 +20,7 @@ int main(int argc, char const *argv[])
     scanf("%d",&n);
     int arr[n];
     printf("Enter the sorted array : ");
-    for( int i=0; i<n; i++){
+    for(int i=0; i<n; i++){
         scanf("%d",&arr[i]);
     }    
     printf("Enter the key to searched \n");
