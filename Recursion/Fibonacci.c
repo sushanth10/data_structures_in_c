@@ -1,8 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int fibonacci(int a){
-    int n = a;
+int fibonacci(int n){
     if(n==0){
         return 0;
     }
